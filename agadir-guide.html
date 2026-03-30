@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agadir — La Perle du Souss</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ═══════════════════════════════════════════
+   AGADIR GUIDE — STYLESHEET
+   Palette : Bleu Atlantique · Sable Doré · Vert Palmier
+═══════════════════════════════════════════ */
+:root {
+  --sand:       #e8c98a;
+  --sand-light: #f5e9c8;
+  --sand-pale:  #fdf7ed;
+  --ocean:      #1a6b8a;
+  --ocean-dark: #0d4a63;
+  --ocean-light:#3a9dbf;
+  --ocean-pale: #e8f4f9;
+  --palm:       #3d7a4e;
+  --palm-light: #5aac6e;
+  --sunset:     #c45c24;
+  --text:       #1c1c1c;
+  --text-muted: #666;
+  --white:      #fff;
+  --radius:     12px;
+  --radius-lg:  20px;
+  --shadow:     0 8px 32px rgba(0,0,0,.12);
+  --shadow-lg:  0 20px 60px rgba(0,0,0,.18);
+  --transition: .35s cubic-bezier(.4,0,.2,1);
+  --nav-h:      72px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'Jost', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; line-height: 1.1; font-weight: 600; }
+em { font-style: italic; color: var(--ocean); }
+p { line-height: 1.7; color: var(--text-muted); }
+section { padding: 100px 6vw; }
+.section-label {
+  font-family: 'Jost', sans-serif;
+  font-size: .75rem; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ocean); margin-bottom: 1rem;
+}
+.section-title { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 3rem; }
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── NAVBAR ─────────────────────────── */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5vw;
+  background: transparent;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+#navbar.scrolled {
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 24px rgba(0,0,0,.1);
+}
+.nav-logo { display: flex; flex-direction: column; line-height: 1; }
+.logo-ar { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--sand); transition: color var(--transition); }
+.logo-fr { font-family: 'Jost', sans-serif; font-size: .65rem; letter-spacing: .22em; color: var(--white); transition: color var(--transition); }
+#navbar.scrolled .logo-ar { color: var(--ocean); }
+#navbar.scrolled .logo-fr { color: var(--ocean-dark); }
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links a {
+  font-size: .82rem; font-weight: 500; letter-spacing: .05em;
+  color: rgba(255,255,255,.85); transition: color var(--transition);
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0;
+  width: 0; height: 1.5px; background: var(--sand);
+  transition: width var(--transition);
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-links a:hover { color: var(--white); }
+#navbar.scrolled .nav-links a { color: var(--text-muted); }
+#navbar.scrolled .nav-links a:hover { color: var(--ocean); }
+#navbar.scrolled .nav-links a::after { background: var(--ocean); }
+.nav-cta { background: var(--ocean) !important; color: var(--white) !important; padding: .5rem 1.25rem; border-radius: 30px; }
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--ocean-dark) !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+#navbar.scrolled .hamburger span { background: var(--ocean-dark); }
+
+/* ── HERO ────────────────────────── */
+#hero {
+  position: relative; height: 100vh; min-height: 600px;
+  overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 0;
+}
+.hero-slides { position: absolute; inset: 0; }
+.slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity 1.2s ease;
+}
+.slide.active { opacity: 1; animation: kenburns 12s ease forwards; }
+@keyframes kenburns { from { transform: scale(1.08); } to { transform: scale(1); } }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(13,74,99,.6) 0%, rgba(13,74,99,.2) 50%, rgba(0,0,0,.6) 100%);
+}
+.hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 0 4vw; }
+.hero-eyebrow { font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: var(--sand); margin-bottom: 1.2rem; font-weight: 500; }
+.hero-title { font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 300; color: var(--white); line-height: 1; margin-bottom: 1.5rem; }
+.hero-title em { color: var(--sand); font-style: italic; font-weight: 300; }
+.hero-sub { font-size: clamp(.9rem, 2vw, 1.15rem); color: rgba(255,255,255,.85); max-width: 520px; margin: 0 auto 2.5rem; font-weight: 300; }
+.btn-hero {
+  display: inline-block; padding: .9rem 2.5rem;
+  background: var(--sand); color: var(--ocean-dark);
+  border-radius: 40px; font-weight: 600; font-size: .9rem; letter-spacing: .05em;
+  transition: var(--transition);
+}
+.btn-hero:hover { background: var(--white); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+.slide-dots { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; gap: .6rem; z-index: 3; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.4); cursor: pointer; transition: var(--transition); }
+.dot.active { background: var(--sand); transform: scale(1.3); }
+.hero-scroll-hint {
+  position: absolute; bottom: 2.5rem; right: 3rem;
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  color: rgba(255,255,255,.6); font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; z-index: 3;
+}
+.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(255,255,255,.6), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.15)} }
+
+/* ── STATS ──────────────────────── */
+#stats { background: var(--ocean-dark); padding: 60px 6vw; }
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+.stat-card { text-align: center; padding: 2.5rem 1rem; border-right: 1px solid rgba(255,255,255,.1); }
+.stat-card:last-child { border-right: none; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,5vw,4rem); color: var(--sand); font-weight: 300; }
+.stat-unit { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--sand); }
+.stat-card p { color: rgba(255,255,255,.6); font-size: .82rem; margin-top: .4rem; letter-spacing: .06em; }
+
+/* ── ABOUT ──────────────────────── */
+#about { background: var(--sand-pale); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.about-text h2 { font-size: clamp(2rem,4vw,3.5rem); margin-bottom: 1.5rem; }
+.about-text p { margin-bottom: 1.2rem; }
+.about-tags { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.8rem; }
+.about-tags span { background: var(--ocean-pale); color: var(--ocean-dark); padding: .4rem 1rem; border-radius: 20px; font-size: .82rem; font-weight: 500; }
+.about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.info-card { background: var(--white); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); transition: transform var(--transition); }
+.info-card:hover { transform: translateY(-4px); }
+.info-icon { font-size: 1.8rem; margin-bottom: .8rem; }
+.info-card h4 { font-size: 1rem; margin-bottom: .5rem; color: var(--ocean-dark); }
+.info-card p { font-size: .85rem; }
+
+/* ── ATTRACTIONS ────────────────── */
+#attractions { background: var(--white); }
+.map-container { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); margin-bottom: 4rem; }
+.attractions-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.attr-card { position: relative; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; box-shadow: var(--shadow); }
+.attr-img { height: 240px; background-size: cover; background-position: center; transition: transform .6s ease; }
+.attr-card:hover .attr-img { transform: scale(1.06); }
+.attr-badge { position: absolute; top: 1rem; left: 1rem; background: var(--sand); color: var(--ocean-dark); font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: .3rem .8rem; border-radius: 20px; }
+.attr-body { padding: 1.4rem; background: var(--white); }
+.attr-body h3 { font-size: 1.3rem; margin-bottom: .4rem; color: var(--ocean-dark); }
+.attr-body p { font-size: .85rem; margin-bottom: .8rem; }
+.attr-meta { display: flex; gap: 1rem; font-size: .75rem; color: var(--text-muted); }
+.attr-hover {
+  position: absolute; inset: 0;
+  background: linear-gradient(170deg, var(--ocean-dark) 0%, var(--ocean) 100%);
+  color: var(--white); padding: 2rem;
+  display: flex; flex-direction: column; justify-content: center;
+  opacity: 0; transition: opacity .35s ease;
+}
+.attr-card:hover .attr-hover, .attr-card:focus .attr-hover { opacity: 1; }
+.attr-hover h3 { color: var(--sand); font-size: 1.4rem; margin-bottom: 1rem; }
+.attr-hover p { color: rgba(255,255,255,.85); margin-bottom: 1.5rem; }
+.btn-sm { display: inline-block; padding: .5rem 1.2rem; background: var(--sand); color: var(--ocean-dark); border-radius: 20px; font-size: .82rem; font-weight: 600; transition: var(--transition); align-self: flex-start; }
+.btn-sm:hover { background: var(--white); }
+
+/* ── RESTAURANTS ────────────────── */
+#restaurants { background: var(--sand-pale); }
+.filter-bar { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 3rem; }
+.filter-btn { padding: .5rem 1.3rem; border: 1.5px solid var(--ocean-light); background: transparent; color: var(--ocean); border-radius: 25px; font-size: .82rem; font-weight: 500; cursor: pointer; transition: var(--transition); font-family: 'Jost', sans-serif; }
+.filter-btn:hover, .filter-btn.active { background: var(--ocean); color: var(--white); border-color: var(--ocean); }
+.resto-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.resto-card { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); transition: transform var(--transition); }
+.resto-card:hover { transform: translateY(-6px); }
+.resto-card.hidden { display: none; }
+.resto-img { height: 200px; background-size: cover; background-position: center; transition: transform .5s ease; }
+.resto-card:hover .resto-img { transform: scale(1.04); }
+.resto-body { padding: 1.4rem; }
+.resto-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .4rem; }
+.resto-top h3 { font-size: 1.2rem; color: var(--ocean-dark); }
+.resto-rating { color: var(--sand); font-weight: 600; font-size: .85rem; white-space: nowrap; }
+.resto-tag { display: inline-block; font-size: .7rem; background: var(--ocean-pale); color: var(--ocean-dark); padding: .2rem .7rem; border-radius: 20px; margin-bottom: .8rem; font-weight: 500; }
+.resto-body p { font-size: .85rem; margin-bottom: .5rem; }
+.resto-addr { font-size: .78rem !important; color: var(--text-muted); }
+
+/* ── HOTELS ─────────────────────── */
+#hotels { background: var(--white); }
+.hotels-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; }
+.hotel-card { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); transition: transform var(--transition); }
+.hotel-card:hover { transform: translateY(-6px); }
+.hotel-img { height: 260px; background-size: cover; background-position: center; position: relative; }
+.hotel-stars { position: absolute; bottom: 1rem; right: 1rem; color: var(--sand); font-size: .9rem; background: rgba(0,0,0,.5); padding: .3rem .7rem; border-radius: 20px; backdrop-filter: blur(4px); }
+.hotel-body { padding: 1.5rem; background: var(--white); }
+.hotel-body h3 { font-size: 1.3rem; color: var(--ocean-dark); margin-bottom: .5rem; }
+.hotel-body p { font-size: .85rem; margin-bottom: 1rem; }
+.hotel-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+.hotel-price { font-size: .82rem; font-weight: 600; color: var(--palm); }
+.hotel-note { color: var(--sand); font-weight: 700; }
+.btn-outline { display: inline-block; padding: .55rem 1.4rem; border: 2px solid var(--ocean); color: var(--ocean); border-radius: 25px; font-size: .82rem; font-weight: 600; transition: var(--transition); }
+.btn-outline:hover { background: var(--ocean); color: var(--white); }
+
+/* ── EVENTS ─────────────────────── */
+#events { background: var(--ocean-dark); color: var(--white); }
+#events .section-label { color: var(--sand); }
+#events .section-title em { color: var(--sand); }
+#events .section-title { color: var(--white); }
+.events-timeline { position: relative; padding-left: 2rem; max-width: 860px; margin: 0 auto; }
+.events-timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,.15); }
+.event-item { display: grid; grid-template-columns: 80px 1fr; gap: 2rem; margin-bottom: 3rem; align-items: start; }
+.event-item:last-child { margin-bottom: 0; }
+.event-date { text-align: center; position: relative; }
+.event-date::before { content: ''; position: absolute; top: .5rem; left: calc(100% + 1.5rem); width: 8px; height: 8px; border-radius: 50%; background: var(--sand); transform: translateX(-50%); }
+.event-month { display: block; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--sand); font-weight: 500; }
+.event-day { display: block; font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--white); line-height: 1; }
+.event-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius); padding: 1.4rem; transition: background var(--transition); }
+.event-card:hover { background: rgba(255,255,255,.1); }
+.event-tag { display: inline-block; font-size: .7rem; background: var(--sand); color: var(--ocean-dark); padding: .2rem .7rem; border-radius: 20px; margin-bottom: .7rem; font-weight: 600; letter-spacing: .05em; }
+.event-card h3 { color: var(--white); font-size: 1.2rem; margin-bottom: .6rem; }
+.event-card p { color: rgba(255,255,255,.65); font-size: .85rem; }
+
+/* ── TIPS ───────────────────────── */
+#tips { background: var(--sand-pale); }
+.tips-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.tip-card { background: var(--white); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: transform var(--transition); }
+.tip-card:hover { transform: translateY(-4px); }
+.tip-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+.tip-card h4 { font-size: 1.1rem; color: var(--ocean-dark); margin-bottom: 1rem; font-family: 'Jost', sans-serif; font-weight: 600; }
+.tip-card ul { display: flex; flex-direction: column; gap: .5rem; }
+.tip-card li { font-size: .84rem; color: var(--text-muted); padding-left: 1rem; position: relative; }
+.tip-card li::before { content: '·'; position: absolute; left: 0; color: var(--ocean-light); }
+
+/* ── CONTACT ────────────────────── */
+#contact { background: var(--white); }
+.contact-wrapper { display: grid; grid-template-columns: 1fr 1.3fr; gap: 6rem; align-items: start; }
+.contact-left h2 { font-size: clamp(2rem,4vw,3.2rem); margin-bottom: 1rem; }
+.contact-left p { margin-bottom: 2rem; }
+.contact-infos { display: flex; flex-direction: column; gap: 1rem; }
+.ci { display: flex; align-items: center; gap: .75rem; font-size: .9rem; color: var(--text-muted); }
+.ci span { font-size: 1.2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; margin-bottom: 1.2rem; }
+label { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ocean-dark); margin-bottom: .4rem; }
+input, select, textarea { padding: .75rem 1rem; border: 1.5px solid #e0e0e0; border-radius: var(--radius); font-family: 'Jost', sans-serif; font-size: .9rem; color: var(--text); background: var(--sand-pale); outline: none; transition: border-color var(--transition), box-shadow var(--transition); width: 100%; }
+input:focus, select:focus, textarea:focus { border-color: var(--ocean); box-shadow: 0 0 0 3px rgba(26,107,138,.12); background: var(--white); }
+input.invalid, textarea.invalid { border-color: #e05c5c; }
+.form-err { font-size: .75rem; color: #e05c5c; margin-top: .3rem; min-height: 1rem; }
+.btn-submit { width: 100%; padding: 1rem; background: var(--ocean-dark); color: var(--white); border: none; border-radius: var(--radius); font-family: 'Jost', sans-serif; font-size: .95rem; font-weight: 600; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: .6rem; letter-spacing: .04em; }
+.btn-submit:hover { background: var(--ocean); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,138,.3); }
+.btn-arrow { transition: transform var(--transition); }
+.btn-submit:hover .btn-arrow { transform: translateX(4px); }
+.form-success { display: none; margin-top: 1.2rem; padding: 1rem; background: #e8f5e9; border-radius: var(--radius); color: var(--palm); font-size: .9rem; font-weight: 500; }
+.form-success.show { display: block; }
+
+/* ── FOOTER ─────────────────────── */
+#footer { background: var(--ocean-dark); color: rgba(255,255,255,.7); padding: 5rem 6vw 2rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 4rem; }
+.footer-brand .nav-logo { margin-bottom: 1rem; }
+.footer-brand .logo-ar { color: var(--sand); }
+.footer-brand .logo-fr { color: rgba(255,255,255,.5); }
+.footer-brand p { font-size: .85rem; max-width: 260px; line-height: 1.6; margin-bottom: 1.5rem; color: rgba(255,255,255,.55); }
+.social-links { display: flex; gap: .8rem; }
+.social-links a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; text-transform: uppercase; transition: var(--transition); color: rgba(255,255,255,.6) !important; }
+.social-links a:hover { background: var(--sand); color: var(--ocean-dark) !important; border-color: var(--sand); }
+.footer-col h5 { font-family: 'Jost', sans-serif; font-size: .75rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--sand); margin-bottom: 1.2rem; }
+.footer-col ul { display: flex; flex-direction: column; gap: .6rem; }
+.footer-col a { font-size: .85rem; color: rgba(255,255,255,.55); transition: color var(--transition); }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: .78rem; color: rgba(255,255,255,.35); }
+
+/* ── BACK TO TOP ─────────────────── */
+#backToTop { position: fixed; bottom: 2rem; right: 2rem; width: 46px; height: 46px; border-radius: 50%; background: var(--ocean); color: var(--white); border: none; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 16px rgba(26,107,138,.4); opacity: 0; transform: translateY(20px); transition: var(--transition); z-index: 900; }
+#backToTop.visible { opacity: 1; transform: translateY(0); }
+#backToTop:hover { background: var(--ocean-dark); }
+
+/* ── RESPONSIVE ─────────────────── */
+@media (max-width: 1100px) {
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .attractions-grid { grid-template-columns: repeat(2,1fr); }
+  .resto-grid { grid-template-columns: repeat(2,1fr); }
+  .hotels-grid { grid-template-columns: 1fr; }
+  .tips-grid { grid-template-columns: repeat(2,1fr); }
+  .contact-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+}
+@media (max-width: 680px) {
+  section { padding: 70px 5vw; }
+  .nav-links { position: fixed; inset: 0; top: var(--nav-h); background: rgba(255,255,255,.98); backdrop-filter: blur(16px); flex-direction: column; justify-content: center; gap: 2.5rem; transform: translateX(100%); transition: transform .4s cubic-bezier(.4,0,.2,1); }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a { color: var(--ocean-dark) !important; font-size: 1.1rem; }
+  .hamburger { display: flex; }
+  .attractions-grid { grid-template-columns: 1fr; }
+  .resto-grid { grid-template-columns: 1fr; }
+  .tips-grid { grid-template-columns: 1fr; }
+  .about-cards { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: .5rem; text-align: center; }
+  .form-row { grid-template-columns: 1fr; }
+  .event-item { grid-template-columns: 60px 1fr; gap: 1rem; }
+  .hero-scroll-hint { display: none; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span class="logo-ar">أكادير</span>
+    <span class="logo-fr">AGADIR</span>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#hero">Accueil</a></li>
+    <li><a href="#about">À Propos</a></li>
+    <li><a href="#attractions">Attractions</a></li>
+    <li><a href="#restaurants">Gastronomie</a></li>
+    <li><a href="#hotels">Hébergements</a></li>
+    <li><a href="#events">Événements</a></li>
+    <li><a href="#tips">Conseils</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <div class="hero-slides">
+    <div class="slide active" style="background-image:url('https://exploreessaouira.com/wp-content/uploads/2024/10/Agadir-sunset.jpg')"></div>
+    <div class="slide" style="background-image:url('https://www.barcelo.com/guia-turismo/wp-content/uploads/2020/05/playas-agadir-1.jpg')"></div>
+    <div class="slide" style="background-image:url('https://photographeragadir.com/wp-content/uploads/2024/05/Untitled-design-63-1536x865.png')"></div>
+    <div class="slide" style="background-image:url('https://photographeragadir.com/wp-content/uploads/2024/05/agadir-photography-1536x865.png')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow reveal">30°14′N — 9°35′O · Maroc</p>
+    <h1 class="hero-title reveal">La Perle<br/><em>du Souss</em></h1>
+    <p class="hero-sub reveal">Soleil, mer et culture berbère — découvrez la ville la plus ensoleillée d'Afrique du Nord.</p>
+    <a href="#attractions" class="btn-hero reveal">Explorer la ville</a>
+  </div>
+  <div class="slide-dots" id="slideDots"></div>
+  <div class="hero-scroll-hint">
+    <span>Défiler</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════════ STATS ══════════════ -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-card reveal"><span class="stat-num" data-target="300">0</span><span class="stat-unit">+</span><p>Jours de soleil par an</p></div>
+    <div class="stat-card reveal"><span class="stat-num" data-target="9">0</span><span class="stat-unit">km</span><p>De plage de sable fin</p></div>
+    <div class="stat-card reveal"><span class="stat-num" data-target="1960">0</span><p>Année de reconstruction</p></div>
+    <div class="stat-card reveal"><span class="stat-num" data-target="1.2">0</span><span class="stat-unit">M</span><p>Visiteurs par an</p></div>
+  </div>
+</section>
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about">
+  <div class="section-label reveal">À propos</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h2>Une ville<br/><em>renée de ses cendres</em></h2>
+      <p>Le 29 février 1960, un séisme dévastateur rasa Agadir en 15 secondes. De cette tragédie naquit une ville résolument moderne, reconstruite sur le rivage de l'Atlantique, gardant en son cœur la mémoire berbère millénaire et la chaleur du Maroc du Sud.</p>
+      <p>Aujourd'hui, Agadir est la station balnéaire la plus prisée du Maroc : 300 jours de soleil, une plage de 9 km aux sables ocre et dorés, une marina cosmopolite, et un arrière-pays verdoyant dominé par l'arganeraie — classée à l'UNESCO.</p>
+      <div class="about-tags">
+        <span>🌊 Atlantique</span>
+        <span>🌴 Souss-Massa</span>
+        <span>🏺 Culture Amazighe</span>
+        <span>☀️ Climat doux</span>
+      </div>
+    </div>
+    <div class="about-cards reveal">
+      <div class="info-card"><div class="info-icon">🏛️</div><h4>Histoire</h4><p>Fondée au XV<sup>e</sup> siècle par les Portugais, Agadir fut successivement sa kasbah berbère, comptoir commercial et ville moderne après le tremblement de terre de 1960.</p></div>
+      <div class="info-card"><div class="info-icon">🌡️</div><h4>Climat</h4><p>Méditerranéen océanique. Températures douces toute l'année : 20 °C en hiver, 28 °C en été. Précipitations rares. Vents de l'alizé rafraîchissants en juillet–août.</p></div>
+      <div class="info-card"><div class="info-icon">🗣️</div><h4>Langue & Culture</h4><p>Tachelhit (amazighe), arabe dialectal et français sont les langues du quotidien. L'hospitalité «<em>tifawin</em>» est le maître mot de la culture Chleuhe du Souss.</p></div>
+      <div class="info-card"><div class="info-icon">✈️</div><h4>Accès</h4><p>Aéroport Al Massira (AGA) à 25 km. Vols directs depuis Paris, Lyon, Madrid, Londres, Bruxelles et Casablanca. Bus CTM depuis les villes voisines.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ATTRACTIONS ══════════════ -->
+<section id="attractions">
+  <div class="section-label reveal">Découvrir</div>
+  <h2 class="section-title reveal">Attractions<br/><em>incontournables</em></h2>
+  <div class="map-container reveal">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109566.37!2d-9.6722!3d30.4271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdb3b6e9063a43a5%3A0x500b0c1dd1b8d0e!2sAgadir!5e0!3m2!1sfr!2sma!4v1700000000000" width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy" title="Carte Agadir"></iframe>
+  </div>
+  <div class="attractions-grid">
+    <div class="attr-card reveal" tabindex="0">
+      <div class="attr-img" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80')"><span class="attr-badge">Nature</span></div>
+      <div class="attr-body"><h3>Plage d'Agadir</h3><p>9 km de sable doré baigné par l'Atlantique. Parmi les 10 plus belles plages d'Afrique.</p><div class="attr-meta"><span>🕐 Toute l'année</span><span>💰 Gratuit</span></div></div>
+      <div class="attr-hover"><h3>Plage d'Agadir</h3><p>Idéale pour la baignade, le surf, le beach-volley et les promenades au coucher du soleil. Chaises longues et parasols disponibles. Accès 24h/24.</p><a href="#contact" class="btn-sm">En savoir plus</a></div>
+    </div>
+    <div class="attr-card reveal" tabindex="0">
+      <div class="attr-img" style="background-image:url('https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80')"><span class="attr-badge">Patrimoine</span></div>
+      <div class="attr-body"><h3>Kasbah Oufella</h3><p>Forteresse berbère du XVI<sup>e</sup> s. surplombant la ville. Vue panoramique à 236 m d'altitude.</p><div class="attr-meta"><span>🕐 8h–18h</span><span>💰 20 MAD</span></div></div>
+      <div class="attr-hover"><h3>Kasbah d'Agadir Oufella</h3><p>Vestige de la ville ancienne. Les murs portent l'inscription «Craindre Dieu, le Roi et la patrie». Panorama inoubliable sur la baie et la marina.</p><a href="#contact" class="btn-sm">En savoir plus</a></div>
+    </div>
+    <div class="attr-card reveal" tabindex="0">
+      <div class="attr-img" style="background-image:url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80')"><span class="attr-badge">Commerce</span></div>
+      <div class="attr-body"><h3>Souk El Had</h3><p>Le plus grand marché couvert du Maroc : épices, artisanat, textiles et fruits exotiques.</p><div class="attr-meta"><span>🕐 8h–20h</span><span>💰 Gratuit</span></div></div>
+      <div class="attr-hover"><h3>Souk El Had</h3><p>Plus de 6 000 boutiques organisées par secteurs. Argan, safran, tapis, céramiques. Ambiance authentique et prix négociables.</p><a href="#contact" class="btn-sm">En savoir plus</a></div>
+    </div>
+    <div class="attr-card reveal" tabindex="0">
+      <div class="attr-img" style="background-image:url('https://images.unsplash.com/photo-1558642891-54be180ea339?w=800&q=80')"><span class="attr-badge">Loisirs</span></div>
+      <div class="attr-body"><h3>Marina d'Agadir</h3><p>Port de plaisance moderne avec restaurants, boutiques et sorties en mer. Ambiance cosmopolite.</p><div class="attr-meta"><span>🕐 10h–00h</span><span>💰 Variable</span></div></div>
+      <div class="attr-hover"><h3>Marina d'Agadir</h3><p>Flânez sur les quais, embarquez pour une excursion en bateau ou dînez face à l'Atlantique. Dolphin watching et pêche sportive au départ du port.</p><a href="#contact" class="btn-sm">En savoir plus</a></div>
+    </div>
+    <div class="attr-card reveal" tabindex="0">
+      <div class="attr-img" style="background-image:url('https://images.unsplash.com/photo-1563906267088-b029e7101114?w=800&q=80')"><span class="attr-badge">Nature</span></div>
+      <div class="attr-body"><h3>Parc Souss-Massa</h3><p>Réserve naturelle : ibis chauves, flamants roses et forêt d'arganiers endémique.</p><div class="attr-meta"><span>🕐 8h–17h</span><span>💰 30 MAD</span></div></div>
+      <div class="attr-hover"><h3>Parc National Souss-Massa</h3><p>À 35 km d'Agadir, 33 800 ha protégés. Randonnées guidées le long de l'oued Massa et observation ornithologique exceptionnelle.</p><a href="#contact" class="btn-sm">En savoir plus</a></div>
+    </div>
+    <div class="attr-card reveal" tabindex="0">
+      <div class="attr-img" style="background-image:url('https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800&q=80')"><span class="attr-badge">Culture</span></div>
+      <div class="attr-body"><h3>Musée Berbère</h3><p>Riche collection d'art amazigh : bijoux, poteries et costumes d'apparat traditionnels.</p><div class="attr-meta"><span>🕐 9h–18h (sf. lun.)</span><span>💰 25 MAD</span></div></div>
+      <div class="attr-hover"><h3>Musée Berbère d'Agadir</h3><p>Situé dans les jardins de l'Olhão, ce musée célèbre la civilisation amazighe du Souss. Guides multilingues et boutique de souvenirs artisanaux.</p><a href="#contact" class="btn-sm">En savoir plus</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ RESTAURANTS ══════════════ -->
+<section id="restaurants">
+  <div class="section-label reveal">Gastronomie</div>
+  <h2 class="section-title reveal">Saveurs<br/><em>du Souss</em></h2>
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" data-filter="all">Tout</button>
+    <button class="filter-btn" data-filter="marocain">Marocain</button>
+    <button class="filter-btn" data-filter="poissons">Poissons & Fruits de mer</button>
+    <button class="filter-btn" data-filter="international">International</button>
+    <button class="filter-btn" data-filter="cafe">Café & Pâtisserie</button>
+  </div>
+  <div class="resto-grid" id="restoGrid">
+    <div class="resto-card reveal" data-cat="marocain">
+      <div class="resto-img" style="background-image:url('https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80')"></div>
+      <div class="resto-body"><div class="resto-top"><h3>Dar Souss</h3><span class="resto-rating">★ 4.8</span></div><span class="resto-tag">Marocain</span><p>Tajine d'agneau aux pruneaux, pastilla au poulet, couscous royal dans un riad à ciel ouvert.</p><p class="resto-addr">📍 Rue de la Kasbah, Talborjt · 150–350 MAD</p></div>
+    </div>
+    <div class="resto-card reveal" data-cat="poissons">
+      <div class="resto-img" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80')"></div>
+      <div class="resto-body"><div class="resto-top"><h3>Le Port de Pêche</h3><span class="resto-rating">★ 4.7</span></div><span class="resto-tag">Poissons & Fruits de mer</span><p>Grillades de poissons ultra-frais directement du chalutier. Crevettes, calamars, soles au choix.</p><p class="resto-addr">📍 Port de Pêche d'Agadir · 80–200 MAD</p></div>
+    </div>
+    <div class="resto-card reveal" data-cat="international">
+      <div class="resto-img" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80')"></div>
+      <div class="resto-body"><div class="resto-top"><h3>Marina Lounge</h3><span class="resto-rating">★ 4.5</span></div><span class="resto-tag">International</span><p>Cuisine fusion méditerranéenne, cocktails artisanaux et vue imprenable sur les yachts de la marina.</p><p class="resto-addr">📍 Marina d'Agadir · 200–500 MAD</p></div>
+    </div>
+    <div class="resto-card reveal" data-cat="cafe">
+      <div class="resto-img" style="background-image:url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80')"></div>
+      <div class="resto-body"><div class="resto-top"><h3>Café Tafarnout</h3><span class="resto-rating">★ 4.6</span></div><span class="resto-tag">Café & Pâtisserie</span><p>Msemen au miel d'argan, atay à la menthe, chebakia dans un cadre bohème chic.</p><p class="resto-addr">📍 Bld du 20 Août, Agadir · 30–80 MAD</p></div>
+    </div>
+    <div class="resto-card reveal" data-cat="marocain">
+      <div class="resto-img" style="background-image:url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80')"></div>
+      <div class="resto-body"><div class="resto-top"><h3>Riad Tikida</h3><span class="resto-rating">★ 4.9</span></div><span class="resto-tag">Marocain</span><p>Gastronomie marocaine haut de gamme. Mechoui le vendredi, dîners aux chandelles dans le jardin andalou.</p><p class="resto-addr">📍 Cité Founty, Agadir · 300–700 MAD</p></div>
+    </div>
+    <div class="resto-card reveal" data-cat="poissons">
+      <div class="resto-img" style="background-image:url('https://images.unsplash.com/photo-1551183053-bf91798d792a?w=600&q=80')"></div>
+      <div class="resto-body"><div class="resto-top"><h3>L'Arganier de Mer</h3><span class="resto-rating">★ 4.4</span></div><span class="resto-tag">Poissons & Fruits de mer</span><p>Homard grillé à l'huile d'argan, bisque de crevettes et tartare de thon rouge aux agrumes.</p><p class="resto-addr">📍 Avenue Hassan II · 250–600 MAD</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ HOTELS ══════════════ -->
+<section id="hotels">
+  <div class="section-label reveal">Hébergements</div>
+  <h2 class="section-title reveal">Où<br/><em>séjourner</em></h2>
+  <div class="hotels-grid">
+    <div class="hotel-card reveal">
+      <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=700&q=80')"><span class="hotel-stars">★★★★★</span></div>
+      <div class="hotel-body"><h3>Sofitel Agadir Royal Bay</h3><p>Resort 5 étoiles face à la mer. Spa thalasso, 4 piscines, plage privée et gastronomie française.</p><div class="hotel-meta"><span class="hotel-price">À partir de 1 800 MAD / nuit</span><span class="hotel-note">★ 4.9</span></div><a href="https://www.sofitel.com" target="_blank" class="btn-outline">Voir l'hôtel</a></div>
+    </div>
+    <div class="hotel-card reveal">
+      <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=700&q=80')"><span class="hotel-stars">★★★★</span></div>
+      <div class="hotel-body"><h3>Riu Palace Tikida Bay</h3><p>Club de vacances en bord de mer. 3 restaurants, animations, accès direct à la plage inclus.</p><div class="hotel-meta"><span class="hotel-price">À partir de 900 MAD / nuit</span><span class="hotel-note">★ 4.6</span></div><a href="https://www.riu.com" target="_blank" class="btn-outline">Voir l'hôtel</a></div>
+    </div>
+    <div class="hotel-card reveal">
+      <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=700&q=80')"><span class="hotel-stars">★★★★★</span></div>
+      <div class="hotel-body"><h3>Hyatt Place Agadir</h3><p>Design contemporain au cœur du quartier touristique. Rooftop pool et bar panoramique.</p><div class="hotel-meta"><span class="hotel-price">À partir de 1 200 MAD / nuit</span><span class="hotel-note">★ 4.7</span></div><a href="https://www.hyatt.com" target="_blank" class="btn-outline">Voir l'hôtel</a></div>
+    </div>
+    <div class="hotel-card reveal">
+      <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=700&q=80')"><span class="hotel-stars">★★★</span></div>
+      <div class="hotel-body"><h3>Riad Talborjt</h3><p>Riad de charme au cœur de la médina reconstruite. Terrasse avec vue sur la kasbah.</p><div class="hotel-meta"><span class="hotel-price">À partir de 400 MAD / nuit</span><span class="hotel-note">★ 4.5</span></div><a href="#contact" class="btn-outline">Réserver</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ EVENTS ══════════════ -->
+<section id="events">
+  <div class="section-label reveal">Agenda</div>
+  <h2 class="section-title reveal">Événements<br/><em>& Festivals</em></h2>
+  <div class="events-timeline">
+    <div class="event-item reveal"><div class="event-date"><span class="event-month">Fév</span><span class="event-day">14–20</span></div><div class="event-card"><span class="event-tag">Musique</span><h3>Festival Timitar</h3><p>Célébration mondiale des musiques amazighes et world music. Scènes gratuites sur la place Al Amal. Artistes du monde entier durant 4 jours de concert en plein air.</p></div></div>
+    <div class="event-item reveal"><div class="event-date"><span class="event-month">Avr</span><span class="event-day">3–7</span></div><div class="event-card"><span class="event-tag">Sport</span><h3>Agadir Surf Games</h3><p>Compétition internationale de surf et bodyboard sur les vagues de Taghazout. Exhibitions, workshops et marché artisanal sur la plage.</p></div></div>
+    <div class="event-item reveal"><div class="event-date"><span class="event-month">Juin</span><span class="event-day">21</span></div><div class="event-card"><span class="event-tag">Culture</span><h3>Nuit de la Musique</h3><p>Rue piétonne, marina et corniche transformées en scènes improvisées pour une nuit de concerts gratuits. Toutes les musiques du monde sont représentées.</p></div></div>
+    <div class="event-item reveal"><div class="event-date"><span class="event-month">Août</span><span class="event-day">10–15</span></div><div class="event-card"><span class="event-tag">Gastronomie</span><h3>Festival de l'Argan</h3><p>Hommage à l'or liquide du Souss. Dégustations, ateliers de pressage traditionnel, concours culinaires et exposition des coopératives féminines.</p></div></div>
+    <div class="event-item reveal"><div class="event-date"><span class="event-month">Nov</span><span class="event-day">15–20</span></div><div class="event-card"><span class="event-tag">Commerce</span><h3>Salon Halieutis</h3><p>Salon international des produits de la mer. Dégustations, animations culinaires et rencontres avec les pêcheurs artisanaux du port d'Agadir.</p></div></div>
+  </div>
+</section>
+
+<!-- ══════════════ TIPS ══════════════ -->
+<section id="tips">
+  <div class="section-label reveal">Préparation</div>
+  <h2 class="section-title reveal">Conseils<br/><em>pratiques</em></h2>
+  <div class="tips-grid">
+    <div class="tip-card reveal"><div class="tip-icon">🚌</div><h4>Transport</h4><ul><li>Petits taxis (rouges) : course urbaine 10–30 MAD</li><li>Location de voiture : idéale pour excursions</li><li>Bus urbains : lignes 1, 2, 5, 10 (4 MAD)</li><li>Calèches sur la corniche : expérience unique</li></ul></div>
+    <div class="tip-card reveal"><div class="tip-icon">🛡️</div><h4>Sécurité</h4><ul><li>Ville sûre — vigilance habituelle de voyage</li><li>Éviter les vendeurs trop insistants au souk</li><li>Urgences : Police 19, SAMU 15</li><li>Hôpital Hassan II : soins de qualité</li></ul></div>
+    <div class="tip-card reveal"><div class="tip-icon">☀️</div><h4>Météo & Saisons</h4><ul><li>Avr–Jun : idéal, 24–27°C, peu de monde</li><li>Jul–Sep : haute saison, vents rafraîchissants</li><li>Oct–Mar : doux et ensoleillé, très calme</li><li>Crème solaire indispensable toute l'année</li></ul></div>
+    <div class="tip-card reveal"><div class="tip-icon">💰</div><h4>Budget & Monnaie</h4><ul><li>Devise : Dirham marocain (MAD)</li><li>Budget moy. : 400–800 MAD / pers. / jour</li><li>Pourboire 10% apprécié au restaurant</li><li>Marchander est la norme au souk</li></ul></div>
+    <div class="tip-card reveal"><div class="tip-icon">🕌</div><h4>Coutumes & Étiquette</h4><ul><li>S'habiller avec modestie hors de la plage</li><li>La main droite pour manger et saluer</li><li>Ramadan : horaires modifiés, respect requis</li><li>Photographier avec permission bienveillante</li></ul></div>
+    <div class="tip-card reveal"><div class="tip-icon">📶</div><h4>Connectivité</h4><ul><li>SIM locale : Maroc Telecom ou Orange Maroc</li><li>4G disponible dans tout Agadir</li><li>Wi-Fi gratuit dans hôtels et cafés</li><li>Google Maps en mode hors-ligne recommandé</li></ul></div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div class="contact-left reveal">
+      <div class="section-label">Nous écrire</div>
+      <h2>Planifiez<br/><em>votre voyage</em></h2>
+      <p>Une question sur Agadir ? Besoin d'un conseil personnalisé ? Notre équipe locale répond dans les 24 heures.</p>
+      <div class="contact-infos">
+        <div class="ci"><span>📧</span> contact@agadir-guide.ma</div>
+        <div class="ci"><span>📞</span> +212 528 XX XX XX</div>
+        <div class="ci"><span>📍</span> Boulevard du 20 Août, Agadir 80000</div>
+      </div>
+    </div>
+    <div class="contact-right reveal">
+      <form id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-group"><label for="fname">Prénom</label><input type="text" id="fname" placeholder="Votre prénom" required /><span class="form-err" id="err-fname"></span></div>
+          <div class="form-group"><label for="lname">Nom</label><input type="text" id="lname" placeholder="Votre nom" required /><span class="form-err" id="err-lname"></span></div>
+        </div>
+        <div class="form-group"><label for="email">Email</label><input type="email" id="email" placeholder="votre@email.com" required /><span class="form-err" id="err-email"></span></div>
+        <div class="form-group"><label for="subject">Sujet</label><select id="subject"><option value="">Choisir un sujet…</option><option>Hébergement</option><option>Excursions</option><option>Transport</option><option>Gastronomie</option><option>Autre</option></select></div>
+        <div class="form-group"><label for="message">Message</label><textarea id="message" rows="5" placeholder="Décrivez votre projet de voyage…" required></textarea><span class="form-err" id="err-message"></span></div>
+        <button type="submit" class="btn-submit">Envoyer le message <span class="btn-arrow">→</span></button>
+        <div class="form-success" id="formSuccess">✅ Merci ! Votre message a été envoyé. Nous vous répondrons sous 24 h.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><span class="logo-ar">أكادير</span><span class="logo-fr">AGADIR</span></div>
+      <p>Le guide officieux de la Perle du Souss — conçu avec passion par des habitants d'Agadir, Maroc.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="#" aria-label="YouTube">yt</a>
+        <a href="#" aria-label="TikTok">tk</a>
+      </div>
+    </div>
+    <div class="footer-col"><h5>Explorer</h5><ul><li><a href="#attractions">Attractions</a></li><li><a href="#restaurants">Restaurants</a></li><li><a href="#hotels">Hôtels</a></li><li><a href="#events">Événements</a></li></ul></div>
+    <div class="footer-col"><h5>Liens utiles</h5><ul><li><a href="https://www.visitmorocco.com" target="_blank">Office National Tourisme</a></li><li><a href="https://www.airportaga.ma" target="_blank">Aéroport Al Massira</a></li><li><a href="https://www.ctm.ma" target="_blank">Bus CTM</a></li><li><a href="#tips">Conseils voyage</a></li></ul></div>
+    <div class="footer-col"><h5>Mini-carte</h5><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d54783.187!2d-9.5981!3d30.4271!2m3!1f0!2f0!3f0!3m2!1i400!2i200!4f13.1!5e0!3m2!1sfr!2sma!4v1700000000000" width="100%" height="140" style="border:0;border-radius:8px;" allowfullscreen="" loading="lazy" title="Mini-carte Agadir"></iframe></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Agadir Guide — La Perle du Souss. Tous droits réservés.</p>
+    <p>Fait avec ❤️ à Agadir, Maroc 🇲🇦</p>
+  </div>
+</footer>
+
+<button id="backToTop" aria-label="Retour en haut">↑</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ─── NAVBAR ─── */
+  const navbar    = document.getElementById('navbar');
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    const spans = hamburger.querySelectorAll('span');
+    if (navLinks.classList.contains('open')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      spans[1].style.opacity   = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  }));
+
+  /* ─── HERO SLIDER ─── */
+  const slides   = document.querySelectorAll('.slide');
+  const dotsWrap = document.getElementById('slideDots');
+  let current = 0, sliderTimer = null;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goSlide(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots = dotsWrap.querySelectorAll('.dot');
+
+  function goSlide(next) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (next + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+  function startSlider() { sliderTimer = setInterval(() => goSlide(current + 1), 5500); }
+  startSlider();
+  document.getElementById('hero').addEventListener('mouseenter', () => clearInterval(sliderTimer));
+  document.getElementById('hero').addEventListener('mouseleave', startSlider);
+
+  /* ─── SCROLL REVEAL ─── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal:not(.visible)'));
+      const idx = siblings.indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('visible'), idx * 80);
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Trigger hero immediately
+  document.querySelectorAll('.hero-content .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 300 + i * 200);
+  });
+
+  /* ─── COUNTER ANIMATION ─── */
+  const statNums = document.querySelectorAll('.stat-num');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseFloat(el.dataset.target);
+      const isFloat = !Number.isInteger(target);
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / 1800, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = isFloat ? (eased * target).toFixed(1) : Math.floor(eased * target).toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = isFloat ? target.toFixed(1) : target.toLocaleString();
+      }
+      requestAnimationFrame(tick);
+      countObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  statNums.forEach(el => countObserver.observe(el));
+
+  /* ─── RESTAURANT FILTER ─── */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.filter;
+      document.querySelectorAll('.resto-card').forEach(card => {
+        card.classList.toggle('hidden', cat !== 'all' && card.dataset.cat !== cat);
+      });
+    });
+  });
+
+  /* ─── CONTACT FORM ─── */
+  const form    = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+
+  function showErr(id, msg) {
+    const el = document.getElementById('err-' + id);
+    if (el) el.textContent = msg;
+    const inp = form.querySelector('#' + id);
+    if (inp) inp.classList.add('invalid');
+  }
+  function clearErr(id) {
+    const el = document.getElementById('err-' + id);
+    if (el) el.textContent = '';
+    const inp = form.querySelector('#' + id);
+    if (inp) inp.classList.remove('invalid');
+  }
+  form.querySelectorAll('input, textarea').forEach(el => el.addEventListener('input', () => clearErr(el.id)));
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let valid = true;
+    const fname   = form.fname.value.trim();
+    const lname   = form.lname.value.trim();
+    const email   = form.email.value.trim();
+    const message = form.message.value.trim();
+
+    if (!fname)  { showErr('fname',   'Prénom requis.');              valid = false; } else clearErr('fname');
+    if (!lname)  { showErr('lname',   'Nom requis.');                 valid = false; } else clearErr('lname');
+    if (!email)  { showErr('email',   'Email requis.');               valid = false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('email', 'Format invalide.'); valid = false; }
+    else clearErr('email');
+    if (message.length < 10) { showErr('message', 'Message trop court (10 car. min.).'); valid = false; } else clearErr('message');
+
+    if (!valid) return;
+    const btn = form.querySelector('.btn-submit');
+    btn.textContent = 'Envoi en cours…';
+    btn.disabled = true;
+    setTimeout(() => {
+      success.classList.add('show');
+      form.reset();
+      btn.innerHTML = 'Envoyer le message <span class="btn-arrow">→</span>';
+      btn.disabled = false;
+      setTimeout(() => success.classList.remove('show'), 6000);
+    }, 1500);
+  });
+
+  /* ─── BACK TO TOP ─── */
+  document.getElementById('backToTop').addEventListener('click', () =>
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  );
+});
+</script>
+</body>
+</html>
